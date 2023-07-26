@@ -1,0 +1,36 @@
+name: Build backup-reporter-lambda and upload to S3
+
+on:
+  push:
+    paths:
+      - backup-reporter-lambda/*
+
+env:
+  AWS_REGION: 'eu-central-1'
+  DIRECTORY: 'backup-reporter-lambda'
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  EnvSetup:
+    name: Setup env variables
+    runs-on: ubuntu-latest
+    outputs:
+      directory: ${{ steps.set-output-directory.outputs.directory }}
+    steps:
+      - id: set-output-directory
+        run: echo "directory=${{ env.DIRECTORY }}" >> "$GITHUB_OUTPUT"
+  build-and-upload:
+    needs: EnvSetup
+    name: build-and-upload-${{ needs.EnvSetup.outputs.directory }}
+    uses: dfds/shared-workflows/.github/workflows/automation-build-and-upload-lambda-to-s3.yml@master
+    with:
+      role-session-name: upload-${{ needs.EnvSetup.outputs.directory }}
+      working-directory: ./${{ needs.EnvSetup.outputs.directory }}
+      lambda-package-name: ${{ needs.EnvSetup.outputs.directory }}.zip
+      s3-location: dfds-ce-shared-artifacts/${{ github.event.repository.name }}/${{ needs.EnvSetup.outputs.directory }}.zip
+      arguments: PACKAGE_NAME=${{ needs.EnvSetup.outputs.directory }}
+    secrets:
+      role-to-assume: ${{ secrets.ROLE_TO_ASSUME_ARTIFACTS_BUCKET }}
