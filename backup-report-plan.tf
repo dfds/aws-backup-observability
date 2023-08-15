@@ -9,9 +9,7 @@ resource "aws_backup_report_plan" "this" {
   }
   report_setting {
     report_template = "BACKUP_JOB_REPORT"
-    organization_units = [
-      data.aws_organizations_organization.this.accounts
-    ]
+    organization_units = data.aws_organizations_organization.this.accounts
     regions = [
       "eu-central-1",
       "eu-west-1"
