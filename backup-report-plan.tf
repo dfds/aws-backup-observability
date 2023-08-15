@@ -1,7 +1,7 @@
 data "aws_organizations_organization" "this" {}
 
 resource "aws_backup_report_plan" "this" {
-  name = "backup-jobs-organization-report"
+  name = "backup_jobs_organization_report"
   description = "Report plan to aggregate results of backup jobs across the organization"
   report_delivery_channel {
     s3_bucket_name = module.reports_bucket.bucket_name

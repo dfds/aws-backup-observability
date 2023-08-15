@@ -16,7 +16,7 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
-      SLACK_WEBHOOK = var.slack_webhook
+      SLACK_WEBHOOK = var.slack_webhook_url
     }
   }
 
