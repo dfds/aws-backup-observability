@@ -9,18 +9,18 @@
         "lockFileMaintenance"
       ],
       "automerge": true,
-      "ignoreTests": false,
+      "ignoreTests": true,
       "addLabels": ["release:patch"]
     },
     {
       "matchUpdateTypes": ["minor"],
-      "automerge": true,
+      "automerge": false,
       "ignoreTests": false,
       "addLabels": ["release:minor"]
     },
     {
       "matchUpdateTypes": ["major"],
-      "automerge": true,
+      "automerge": false,
       "ignoreTests": false,
       "addLabels": ["release:major"]
     }
