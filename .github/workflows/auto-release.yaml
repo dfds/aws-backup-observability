@@ -7,3 +7,5 @@ on:
 jobs:
   shared:
     uses: dfds/shared-workflows/.github/workflows/automation-auto-release.yml@master
+    with:
+      tag_prefix: "v"
