@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "pin",
+        "digest",
+        "patch",
+        "lockFileMaintenance"
+      ],
+      "automerge": true,
+      "ignoreTests": false
+      "addLabels": ["release:patch"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "automerge": true,
+      "ignoreTests": false
+      "addLabels": ["release:minor"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": true,
+      "ignoreTests": false
+      "addLabels": ["release:major"]
+    }
+  ]
+}
