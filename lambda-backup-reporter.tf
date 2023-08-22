@@ -1,5 +1,5 @@
 locals {
-  lambda_name               = "backup-reporter"
+  lambda_name = "backup-reporter"
 }
 
 resource "aws_lambda_function" "lambda" {
@@ -68,8 +68,8 @@ data "aws_iam_policy_document" "lambda_access" {
     ]
   }
   statement {
-    sid = "AllowGetObject"
-    actions = ["s3:GetObject"]
+    sid       = "AllowGetObject"
+    actions   = ["s3:GetObject"]
     resources = ["${module.reports_bucket.bucket_arn}/*"]
   }
 }
