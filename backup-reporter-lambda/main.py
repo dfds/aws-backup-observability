@@ -5,6 +5,7 @@ import requests
 import boto3
 from botocore.config import Config
 from aws_lambda_powertools import Logger
+import urllib.parse
 
 config = Config(
     region_name='eu-central-1'
@@ -17,7 +18,7 @@ def handler(event, context):
     logger.info('Received event: {}'.format(json.dumps(event, indent=2)))
 
     bucket = event['Records'][0]['s3']['bucket']['name']
-    key = event['Records'][0]['s3']['object']['key']
+    key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
 
     s3 = boto3.client('s3')
     try:
