@@ -1,5 +1,5 @@
 locals {
-  bucket_name = "dfds-backup-reports"
+  bucket_name = "dfds-backup-reports-test"
 }
 
 module "reports_bucket" {
@@ -14,8 +14,8 @@ module "reports_bucket" {
   source_policy_documents         = [data.aws_iam_policy_document.bucket.json]
 }
 
-data "aws_iam_role" "backup_service_role" {
-  name = "AWSServiceRoleForBackupReports"
+resource "aws_iam_service_linked_role" "backup" {
+  aws_service_name = "reports.backup.amazonaws.com"
 }
 
 data "aws_iam_policy_document" "bucket" {
@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "bucket" {
     sid    = "AllowPutObject"
     effect = "Allow"
     principals {
-      identifiers = [data.aws_iam_role.backup_service_role.arn]
+      identifiers = [aws_iam_service_linked_role.backup.arn]
       type        = "AWS"
     }
     actions   = ["s3:PutObject"]
