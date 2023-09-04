@@ -1,13 +1,13 @@
 variable "aws_assume_role_arn" {
-  type = string
+  type        = string
   description = "ARN of the role to assume by the provider"
-  default = ""
+  default     = ""
 }
 
 variable "default_tags" {
-  type = object({})
+  type        = object({})
   description = "A map of default tags that will be applied to all resources that support tagging"
-  default = {}
+  default     = {}
 }
 
 variable "slack_webhook_url" {

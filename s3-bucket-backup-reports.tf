@@ -1,5 +1,17 @@
 locals {
-  bucket_name = "dfds-backup-reports-test"
+  bucket_name = "dfds-backup-reports"
+  lifecycle_configuration = [
+    {
+      id     = "delete-after=1-day"
+      status = "Enabled"
+      expiration = {
+        days = 30
+      }
+      noncurrent_version_expiration = {
+        noncurrent_days = 30
+      }
+    }
+  ]
 }
 
 module "reports_bucket" {
@@ -12,6 +24,8 @@ module "reports_bucket" {
   create_logging_bucket           = true
   logging_bucket_name             = "${local.bucket_name}-s3-logs"
   source_policy_documents         = [data.aws_iam_policy_document.bucket.json]
+  lifecycle_rules                 = local.lifecycle_configuration
+  logging_bucket_lifecycle_rules  = local.lifecycle_configuration
 }
 
 resource "aws_iam_service_linked_role" "backup" {
