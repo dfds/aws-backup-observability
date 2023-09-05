@@ -15,7 +15,7 @@ locals {
 }
 
 module "reports_bucket" {
-  source = "git::https://github.com/dfds/aws-modules-s3.git?ref=v1.4.0"
+  source = "git::https://github.com/dfds/aws-modules-s3.git?ref=v1.4.1"
 
   bucket_name                     = local.bucket_name
   bucket_versioning_configuration = "Enabled"
