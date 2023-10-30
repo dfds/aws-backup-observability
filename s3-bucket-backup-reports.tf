@@ -2,7 +2,7 @@ locals {
   bucket_name = "dfds-backup-reports"
   lifecycle_configuration = [
     {
-      id     = "delete-after-30-days"
+      id     = "delete-after-90-days"
       status = "Enabled"
       expiration = {
         days = 90
