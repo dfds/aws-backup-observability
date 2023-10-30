@@ -5,10 +5,10 @@ locals {
       id     = "delete-after-30-days"
       status = "Enabled"
       expiration = {
-        days = 30
+        days = 90
       }
       noncurrent_version_expiration = {
-        noncurrent_days = 30
+        noncurrent_days = 90
       }
     }
   ]
