@@ -44,7 +44,7 @@ def handler(event, context):
         failed_jobs = []
 
         for item in report:
-            if item['jobStatus'] != 'COMPLETED':
+            if item['jobStatus'] in ['ABORTED', 'FAILED', 'EXPIRED', 'PARTIAL']:
                 failed_jobs.append(item)
 
         slack_webhook_url = os.getenv('SLACK_WEBHOOK')
