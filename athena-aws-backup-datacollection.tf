@@ -1,23 +1,23 @@
 locals {
-  athena_workgroup_name = var.project_name
-  bucket_query_results = "${aws_s3_bucket.reporting.bucket}/athena"
+  athena_workgroup_name  = var.project_name
+  bucket_query_results   = "${aws_s3_bucket.reporting.bucket}/athena"
   athena_output_location = "${aws_s3_bucket.reporting.bucket}/athena/output"
-  source_bucket_path = "${aws_s3_bucket.reporting.bucket}/data"
-  athena_table_name = "${var.project_name}_service_metrics"
-  aws_iam_role = "${var.project_name}_athena_access"
+  source_bucket_path     = "${aws_s3_bucket.reporting.bucket}/data"
+  athena_table_name      = "${var.project_name}_service_metrics"
+  aws_iam_role           = "${var.project_name}_athena_access"
 }
 
 resource "aws_s3_bucket" "reporting" {
   bucket        = var.bucket_name
   force_destroy = var.bucket_force_delete
 
-#   lifecycle {
-#     prevent_destroy = true
-#   }
+  #   lifecycle {
+  #     prevent_destroy = true
+  #   }
 }
 
 resource "aws_athena_workgroup" "reporting" {
-  name = local.athena_workgroup_name
+  name          = local.athena_workgroup_name
   force_destroy = true
 
   configuration {
@@ -28,23 +28,23 @@ resource "aws_athena_workgroup" "reporting" {
 }
 
 resource "aws_athena_database" "reporting" {
-  name   = var.athena_db_name
-  bucket = local.bucket_query_results
+  name          = var.athena_db_name
+  bucket        = local.bucket_query_results
   force_destroy = true
 }
 
 resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
   name          = local.athena_table_name
-  database_name = "${aws_athena_database.reporting.name}"
+  database_name = aws_athena_database.reporting.name
   table_type    = "EXTERNAL_TABLE"
 
   parameters = {
-    EXTERNAL = "TRUE"
+    EXTERNAL                 = "TRUE"
     "skip.header.line.count" = "1"
   }
 
   storage_descriptor {
-    location      =  "s3://${local.source_bucket_path}"
+    location      = "s3://${local.source_bucket_path}"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
@@ -227,7 +227,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 }
 
 resource "aws_iam_role" "this" {
-  name = "${var.project_name}_grafana_athena"
+  name               = "${var.project_name}_grafana_athena"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 
@@ -257,11 +257,11 @@ data "aws_iam_policy_document" "grafana_cloud" {
 }
 
 resource "aws_iam_role" "grafana" {
-  name = "${var.project_name}_grafana_cloud_athena"
+  name               = "${var.project_name}_grafana_cloud_athena"
   assume_role_policy = data.aws_iam_policy_document.grafana_cloud.json
 }
 
 resource "aws_iam_role_policy_attachment" "grafana_cloud" {
-  role = aws_iam_role.grafana.name
+  role       = aws_iam_role.grafana.name
   policy_arn = aws_iam_policy.this.arn
 }
