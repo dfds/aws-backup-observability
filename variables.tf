@@ -44,12 +44,12 @@ variable "k8s_service_account" {
 
 variable "oidc_endpoint_kubernetes" {
   type        = list(string)
-  description = "The OIDC endpoint for the EKS cluster"
+  description = "The OIDC endpoint ARN for the EKS cluster"
 }
 
 variable "oidc_eks_for_athena" {
   type        = string
-  description = "The OIDC endpoint for the EKS cluster"
+  description = "The OIDC endpoint that Athena will be using"
 }
 
 variable "grafana_stack_ids" {
