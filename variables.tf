@@ -17,8 +17,7 @@ variable "slack_webhook_url" {
 }
 
 variable "aws_region" {
-  type    = string
-  default = "eu-central-1"
+  type = string
 }
 
 variable "project_name" {
@@ -26,19 +25,21 @@ variable "project_name" {
 }
 
 variable "bucket_name" {
+  type = string
 }
 
 variable "bucket_force_delete" {
+  type    = bool
   default = false
 }
 
 
 variable "k8s_namespace" {
-
+  type = string
 }
 
 variable "k8s_service_account" {
-
+  type = string
 }
 
 variable "oidc_endpoint_kubernetes" {
@@ -53,7 +54,7 @@ variable "oidc_eks_for_athena" {
 
 variable "grafana_stack_ids" {
   type        = list(string)
-  description = "value"
+  description = "This is a list of Grafana stack IDs that are allowed to assume the role"
 }
 
 variable "grafana_cloud_arn" {
