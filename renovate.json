@@ -1,5 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "schedule": [
+    "after 6am and before 8am on tuesday"
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
