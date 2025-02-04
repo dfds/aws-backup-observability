@@ -6,6 +6,7 @@ on:
       - backup-reporter-lambda/*
     branches:
       - main
+      - ci/fix-broken-pip-install
 
 env:
   AWS_REGION: 'eu-central-1'
