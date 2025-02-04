@@ -2,6 +2,7 @@ PACKAGE_NAME?=
 
 all:
 	mkdir package
+	python3 --version
 	pip --python 3.12 install \
 	--platform manylinux2014_x86_64 \
 	--target=package \
