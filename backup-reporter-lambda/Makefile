@@ -2,7 +2,7 @@ PACKAGE_NAME?=
 
 all:
 	mkdir package
-	pip --python 3.10 install \
+	pip --python 3.12 install \
 	--platform manylinux2014_x86_64 \
 	--target=package \
 	--implementation cp \
