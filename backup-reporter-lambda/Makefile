@@ -2,11 +2,10 @@ PACKAGE_NAME?=
 
 all:
 	mkdir package
-	pip install \
+	pip --python 3.10 install \
 	--platform manylinux2014_x86_64 \
 	--target=package \
 	--implementation cp \
-	--python 3.10 \
 	--only-binary=:all: --upgrade \
 	-r requirements.txt
 	cp main.py ./package/main.py
