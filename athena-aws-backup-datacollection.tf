@@ -2,7 +2,7 @@ locals {
   athena_workgroup_name  = var.project_name
   bucket_query_results   = "${aws_s3_bucket.reporting.bucket}/athena"
   athena_output_location = "${aws_s3_bucket.reporting.bucket}/athena/output"
-  source_bucket_path     = "${aws_s3_bucket.reporting.bucket}/data"
+  source_bucket_path     = "${aws_s3_bucket.reporting.bucket}/Backup/crossaccount/crossregion/"
   athena_table_name      = "${var.project_name}_service_metrics"
   aws_iam_role           = "${var.project_name}_athena_access"
 }
@@ -186,7 +186,7 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid       = "AthenaS3Access"
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${var.bucket_name}/*", "arn:aws:s3:::${var.bucket_name}"]
+    resources = ["arn:aws:s3:::${local.source_bucket_path}/*", "arn:aws:s3:::${local.source_bucket_path}"]
 
     actions = [
       "s3:GetObject",
