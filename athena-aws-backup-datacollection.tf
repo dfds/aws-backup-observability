@@ -44,7 +44,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
   }
 
   storage_descriptor {
-    location      = "s3://${module.s3_bucket.reporting.bucket}/Backup/crossaccount/crossregion/"
+    location      = "s3://${module.reports_bucket.bucket_name}/Backup/crossaccount/crossregion/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
@@ -186,7 +186,7 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid       = "AthenaS3Access"
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${var.bucket_name}/*", "arn:aws:s3:::${var.bucket_name}", "arn:aws:s3:::${module.s3_bucket.reporting.bucket}/*", "arn:aws:s3:::${module.s3_bucket.reporting.bucket}"]
+    resources = ["arn:aws:s3:::${var.bucket_name}/*", "arn:aws:s3:::${var.bucket_name}", "arn:aws:s3:::${module.reports_bucket.bucket_name}/*", "arn:aws:s3:::${module.reports_bucket.bucket_name}"]
 
     actions = [
       "s3:GetObject",
