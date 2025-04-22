@@ -2,7 +2,7 @@ locals {
   athena_workgroup_name  = var.project_name
   bucket_query_results   = "${aws_s3_bucket.reporting.bucket}/athena"
   athena_output_location = "${aws_s3_bucket.reporting.bucket}/athena/output"
-  source_bucket_path     = "${aws_s3_bucket.reporting.bucket}/Backup/crossaccount/crossregion/"
+  source_bucket_path     = "${aws_s3_bucket.reporting.bucket}/data"
   athena_table_name      = "${var.project_name}_service_metrics"
   aws_iam_role           = "${var.project_name}_athena_access"
 }
@@ -44,7 +44,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
   }
 
   storage_descriptor {
-    location      = "s3://${local.source_bucket_path}"
+    location      = "s3://${module.s3_bucket.reporting.bucket}/Backup/crossaccount/crossregion/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
@@ -186,7 +186,7 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid       = "AthenaS3Access"
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${local.source_bucket_path}/*", "arn:aws:s3:::${local.source_bucket_path}"]
+    resources = ["arn:aws:s3:::${var.bucket_name}/*", "arn:aws:s3:::${var.bucket_name}", "arn:aws:s3:::${module.s3_bucket.reporting.bucket}/*", "arn:aws:s3:::${module.s3_bucket.reporting.bucket}"]
 
     actions = [
       "s3:GetObject",
