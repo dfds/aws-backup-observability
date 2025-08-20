@@ -4,7 +4,7 @@
     "config:recommended"
   ],
   "schedule": [
-    "after 6am and before 8am on tuesday"
+    "0 5 * * *"
   ],
   "packageRules": [
     {
