@@ -4,7 +4,7 @@
     "config:recommended"
   ],
   "schedule": [
-    "0 5 * * *"
+    "* 5 * * *"
   ],
   "packageRules": [
     {
