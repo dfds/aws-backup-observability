@@ -1,34 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ],
-  "schedule": [
-    "* 5 * * *"
+    "local>dfds/renovate-config"
   ],
   "packageRules": [
     {
       "matchUpdateTypes": [
-        "pin",
-        "digest",
-        "patch",
-        "lockFileMaintenance"
+        "patch"
       ],
-      "automerge": true,
-      "ignoreTests": true,
-      "addLabels": ["release:patch"]
+      "addLabels": [
+        "release:patch"
+      ]
     },
     {
-      "matchUpdateTypes": ["minor"],
-      "automerge": false,
-      "ignoreTests": false,
-      "addLabels": ["release:minor"]
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "addLabels": [
+        "release:minor"
+      ]
     },
     {
-      "matchUpdateTypes": ["major"],
-      "automerge": false,
-      "ignoreTests": false,
-      "addLabels": ["release:major"]
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "release:major"
+      ]
     }
   ]
 }
